@@ -3,9 +3,18 @@ pipeline {
 
     stages {
 
+        stage('Install Python') {
+            steps {
+                sh '''
+                apt-get update
+                apt-get install -y python3 python3-pip
+                '''
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'pip3 install -r requirements.txt'
             }
         }
 
@@ -17,7 +26,12 @@ pipeline {
 
         stage('Generate Report') {
             steps {
-                sh 'allure generate allure-results --clean -o allure-report'
+                sh '''
+                apt-get install -y default-jre
+                curl -o allure.tgz -L https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.24.0/allure-commandline-2.24.0.tgz
+                tar -xvzf allure.tgz
+                ./allure-2.24.0/bin/allure generate allure-results --clean -o allure-report
+                '''
             }
         }
 
