@@ -10,6 +10,6 @@ class Config:
 
     BROWSER = os.getenv("BROWSER", "chrome")
 
-    HEADLESS = os.getenv("HEADLESS", "false").lower() == "true"
+    HEADLESS = os.getenv("HEADLESS", "true").lower() == "true"
 
     GRID_URL = os.getenv("GRID_URL", None)
